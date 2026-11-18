@@ -1,26 +1,22 @@
-"""指导试点分析 的描述性汇总。"""
+"""区分试点邀请、实际参与与随访结果。"""
 
-from collections import defaultdict
+from .exposure import histories
 
 
-def summarize(records, group_field, value_field):
-    groups = defaultdict(list)
-    for record in records:
-        group = record.get(group_field)
-        value = record.get(value_field)
-        if group is None:
-            continue
-        if isinstance(value, (int, float)) and not isinstance(value, bool):
-            groups[str(group)].append(float(value))
-        else:
-            groups[str(group)]
+def summarize(records):
     result = {}
-    for group, values in sorted(groups.items()):
-        result[group] = {
-            "observed": len(values),
-            "missing": sum(1 for record in records if str(record.get(group_field)) == group and not isinstance(record.get(value_field), (int, float))),
-            "mean": sum(values) / len(values) if values else None,
-            "minimum": min(values) if values else None,
-            "maximum": max(values) if values else None,
+    for student, history in sorted(histories(records).items()):
+        sessions = history["sessions"]
+        outcomes = history["outcomes"]
+        result[student] = {
+            "invited_arm": history["invited_arm"],
+            "sessions_received": len(sessions),
+            "session_arms": sorted({str(event.get("arm", "unknown")) for event in sessions}),
+            "outcome_count": len(outcomes),
+            "latest_outcome": outcomes[-1].get("value") if outcomes else None,
+            "transferred": bool(history["transfers"]),
+            "followup_observed": bool(outcomes),
+            "paused": history["paused"],
+            "events": history["event_ids"],
         }
     return result

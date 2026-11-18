@@ -1,20 +1,8 @@
 [
-  {
-    "id": "sample-1",
-    "period": "2026-S1",
-    "group": "A",
-    "value": 2
-  },
-  {
-    "id": "sample-2",
-    "period": "2026-S1",
-    "group": "A",
-    "value": null
-  },
-  {
-    "id": "sample-3",
-    "period": "2026-S2",
-    "group": "B",
-    "value": 4
-  }
+  {"id":"invite-01","student_id":"s-01","event":"offered","date":"2026-01-12","arm":"dialogue"},
+  {"id":"session-01","student_id":"s-01","event":"session","date":"2026-01-20","arm":"dialogue","mentor":"m-01"},
+  {"id":"transfer-01","student_id":"s-01","event":"transfer","date":"2026-02-14","from":"m-01","to":"m-02"},
+  {"id":"outcome-01","student_id":"s-01","event":"outcome","date":"2026-04-02","value":3.7},
+  {"id":"invite-02","student_id":"s-02","event":"offered","date":"2026-01-15","arm":"usual"},
+  {"id":"pause-02","student_id":"s-02","event":"pause","date":"2026-02-19","reason":"leave"}
 ]
